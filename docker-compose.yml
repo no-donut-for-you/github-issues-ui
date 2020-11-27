@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  github-issues-ui:
+    image: design-pickle/github-issues-ui
+    container_name: github-issues-ui
+    build: .
+    command: yarn start
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - github-issues-api
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - REACT_APP_GITHUB_ISSUES_API_URL=http://localhost:3000
+
+  github-issues-api:
+    image: design-pickle/github-issues-api
+    build: ../github-issues-api
+    container_name: github-issues-api
+    command: rails s -b 0.0.0.0
+    volumes:
+      - ../github-issues-api:/app
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    environment:
+      - PORT=3000
+      - GITHUB_API_URL=https://api.github.com
+      - GITHUB_AUTH_TOKEN=6682a2c358a3a43f82a7df89224c5b87c85f438d
