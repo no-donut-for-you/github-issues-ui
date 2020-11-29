@@ -43,11 +43,13 @@ First, you need to install [Docker](https://docs.docker.com).
 
 The **github-issues-ui** has the **github-issues-api** as a dependency. For this reason, both directories should be placed in the same dir to run it using Docker.
 
-Example:
+#### Example:
 
-github-issues
--- github-issues-api
--- github-issues-ui
+```
++-- github-issues
+|   +-- github-issues-api
+|   +-- github-issues-ui
+```
 
 ### Up and running
 
