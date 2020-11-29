@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
 import DefaultTheme from './theme/DefaultTheme';
 
@@ -15,6 +15,10 @@ function App() {
       <DefaultTheme>
         <Router>
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/issues" />
+            </Route>
+
             <Route path="/issues">
               <Issues />
             </Route>
