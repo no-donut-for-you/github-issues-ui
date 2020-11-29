@@ -18,10 +18,14 @@
 }
 
 .issues-list {
-  margin-top: 20px;
+  margin: 20px 0;
 
   &__table {
     min-width: 1200px;
     max-width: 1200px;
+  }
+
+  .pagination {
+    margin: 20px 0;
   }
 }
