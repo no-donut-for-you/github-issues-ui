@@ -1,0 +1,27 @@
+.main-app-bar {
+  margin-bottom: 50px!important;
+
+  &__actions {
+    display: flex;
+    position: absolute;
+    right: 40px;
+    text-transform: uppercase;
+
+    &-action {
+      color: #FFF!important;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.issues-list {
+  margin-top: 20px;
+
+  &__table {
+    min-width: 1200px;
+    max-width: 1200px;
+  }
+}
