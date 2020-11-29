@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import MainAppBar from '../components/MainAppBar';
 import {
   Grid,
@@ -13,9 +12,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from '@material-ui/core';
 
+import Pagination from '@material-ui/lab/Pagination';
 import SelectField from '../components/SelectField';
 
 import {clear, listIssues} from './IssuesActions';
@@ -34,7 +33,7 @@ class Issues extends React.Component {
       sort: 'comments',
       direction: 'desc',
       page: 1,
-      per_page: 10,
+      per_page: 5,
     },
     issues: [],
   }
@@ -62,14 +61,7 @@ class Issues extends React.Component {
     this.props.clear();
   }
 
-  onChange = async value => {
-    await this.setState({
-      filters: {
-        ...this.state.filters,
-        ...value
-      }
-    });
-
+  submit() {
     const {
       username,
       repository,
@@ -86,21 +78,37 @@ class Issues extends React.Component {
     });
   }
 
+  onChange = async value => {
+    await this.setState({
+      filters: {
+        ...this.state.filters,
+        ...value
+      }
+    });
+
+    this.submit();
+  }
+
+  onClickPagination = async (_, page) => {
+    await this.setState({
+      filters: {
+        ...this.state.filters,
+        page
+      }
+    });
+
+    this.submit();
+  }
+
   displayLabels = labels => {
     const labelNames = labels.map(label => {
-      return <Chip label={label.name} />
+      return <Chip label={label.name}/>
     });
 
     return labelNames;
   }
 
   render() {
-    const disableSubmit = this.state.loading;
-    const columns = [
-      { field: 'id', headerName: 'ID', width: 70 },
-      { field: 'title', headerName: 'Title', width: 130 },
-      { field: 'state', headerName: 'State', width: 130 }
-    ];
     const sortDirection = [{ name: 'Asc', id: 'asc' }, { name: 'Desc', id: 'desc' }];
     const labels = [
       {
@@ -204,6 +212,10 @@ class Issues extends React.Component {
                 </TableBody>
                 </Table>
               </TableContainer>
+            </Grid>
+
+            <Grid item xs={12} className="pagination">
+              <Pagination count={10} variant="outlined" onChange={this.onClickPagination}/>
             </Grid>
           </Grid>
         </main>
